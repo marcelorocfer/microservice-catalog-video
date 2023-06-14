@@ -20,7 +20,7 @@ class DomainValidation
         }
     }
 
-    public static function strMinLength(string $value, int $length = 2, string $message = null)
+    public static function strMinLength(string $value, int $length = 3, string $message = null)
     {
         if (strlen($value) < $length) {
             throw new EntityValidationException($message ?? "The value must at least {$length} characters!");

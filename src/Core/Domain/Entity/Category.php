@@ -40,6 +40,6 @@ class Category
     {
         DomainValidation::strMaxLength($this->name);
         DomainValidation::strMinLength($this->name);
-        DomainValidation::strCanNullAndMaxLength($this->name);
+        DomainValidation::strCanNullAndMaxLength($this->description);
     }
 }
