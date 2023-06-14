@@ -19,6 +19,7 @@ class CategoryUnitTest extends TestCase
         );
 
         $this->assertNotEmpty($category->id());
+        $this->assertNotEmpty($category->createdAt());
         $this->assertEquals('New Category', $category->name);
         $this->assertEquals('New Description', $category->description);
         $this->assertEquals(true, $category->isActive);
@@ -56,6 +57,7 @@ class CategoryUnitTest extends TestCase
             name: 'Category',
             description: 'Description',
             isActive: true,
+            createdAt: '2023-06-14 10:00:00',
         );
 
         $category->update(
