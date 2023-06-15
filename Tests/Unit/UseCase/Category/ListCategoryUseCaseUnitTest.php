@@ -38,7 +38,27 @@ class ListCategoryUseCaseUnitTest extends TestCase
         $response = $useCase->execute($this->mockInputDTO);
 
         $this->assertInstanceOf(CategoryOutputDTO::class, $response);
-        $this->assertEquals('Test Category', $response->name);
         $this->assertEquals($id, $response->id);
+        $this->assertEquals('Test Category', $response->name);
+
+        /**
+         * Spies
+         */
+
+        $this->spy = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
+        $this->spy->shouldReceive('findById')
+                            ->with($id)
+                            ->andReturn($this->mockEntity);
+
+        $useCase = new ListCategoryUseCase($this->spy);
+        $response = $useCase->execute($this->mockInputDTO);
+        $this->spy->shouldHaveReceived('findById');
+    }
+
+    protected function tearDown(): void
+    {
+        Mockery::close();
+
+        parent::tearDown();
     }
 }
