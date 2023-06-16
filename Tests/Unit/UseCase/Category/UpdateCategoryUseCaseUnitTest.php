@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 use Core\Domain\Entity\Category;
 use Core\UseCase\Category\UpdateCategoryUseCase;
 use Core\Domain\Repository\CategoryRepositoryInterface;
+use Core\UseCase\DTO\Category\UpdateCategory\CategoryUpdateInputDTO;
+use Core\UseCase\DTO\Category\UpdateCategory\CategoryUpdateOutputDTO;
 
 class UpdateCategoryUseCaseUnitTest extends TestCase 
 {
@@ -33,7 +35,6 @@ class UpdateCategoryUseCaseUnitTest extends TestCase
         $this->mockInputDTO = Mockery::mock(CategoryUpdateInputDTO::class, [
             $uuid,
             'New name',
-            ''
         ]);
 
         $useCase = new UpdateCategoryUseCase($this->mockRepository);
