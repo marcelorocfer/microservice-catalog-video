@@ -27,12 +27,49 @@ class ListCategoriesUseCaseUnitTest extends TestCase
 
         $this->assertCount(0, $response->items);
         $this->assertInstanceOf(ListCategoriesOutputDTO::class, $response);
+
+        /**      
+         * Spies
+         */
+        $this->spy = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
+        $this->spy->shouldReceive('paginate')->andReturn($mockPagination);
+        $useCase = new ListCategoriesUseCase($this->spy);
+        $useCase->execute($this->mockInputDTO);
+        $this->spy->shouldHaveReceived('paginate');
     }
 
-    protected function mockPagination() 
+    public function testListCategories()
+    {      
+        $register = new stdClass();
+        $register->id = 'id';
+        $register->name = 'name';
+        $register->description = 'description';
+        $register->isActive = 'isActive';
+        $register->created_at = 'created_at';
+        $register->updated_at = 'updated_at';
+        $register->deleted_at = 'deleted_at';
+
+        $mockPagination = $this->mockPagination([
+            $register
+        ]);
+
+        $this->mockRepository = Mockery::mock(stdClass::class, CategoryRepositoryInterface::class);
+        $this->mockRepository->shouldReceive('paginate')->andReturn($mockPagination);
+
+        $this->mockInputDTO = Mockery::mock(ListCategoriesInputDTO::class, ['filter', 'desc']);
+
+        $useCase = new ListCategoriesUseCase($this->mockRepository);
+        $response = $useCase->execute($this->mockInputDTO);
+
+        $this->assertCount(1, $response->items);
+        $this->assertInstanceOf(stdClass::class, $response->items[0]);
+        $this->assertInstanceOf(ListCategoriesOutputDTO::class, $response);
+    }
+
+    protected function mockPagination(array $items = []) 
     {
         $this->mockPagination = Mockery::mock(stdClass::class, PaginationInterface::class);
-        $this->mockPagination->shouldReceive('items')->andReturn([]);
+        $this->mockPagination->shouldReceive('items')->andReturn($items);
         $this->mockPagination->shouldReceive('total')->andReturn(0);
         $this->mockPagination->shouldReceive('firstPage')->andReturn(0);
         $this->mockPagination->shouldReceive('lastPage')->andReturn(0);

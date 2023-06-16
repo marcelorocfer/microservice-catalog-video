@@ -34,5 +34,23 @@ class ListCategoriesUseCase
             to: $categories->to(),
             from: $categories->from(),
         );
+
+        /* return new ListCategoriesOutputDTO(
+            items: array_map(function($data) {
+                return [
+                    'id' => $data->id,
+                    'name' => $data->name,
+                    'description' => $data->description,
+                    'isActive' => $data->isActive,
+                ];
+            }, $categories->items()),
+            total: $categories->total(),
+            last_page: $categories->lastPage(),
+            first_page: $categories->firstPage(),
+            current_page: $categories->currentPage(),
+            per_page: $categories->perPage(),
+            to: $categories->to(),
+            from: $categories->from(),
+        ); */        
     }
 }
