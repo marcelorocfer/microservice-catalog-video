@@ -8,6 +8,8 @@ use Core\UseCase\DTO\Category\UpdateCategory\CategoryUpdateOutputDTO;
 
 class UpdateCategoryUseCase
 {
+    protected $repository;
+    
     public function __construct(CategoryRepositoryInterface $repository)
     {
         $this->repository = $repository;
